@@ -33,9 +33,12 @@ app.get("/notes", function(req, res) {
 1. Use fs to call db.json 
 2. display it on notes.html 
 3. singular notes if time permits
-
 */
 
+// api json route display all notes
+app.get("/api/notes", function(req, res) {
+  return res.json(notes);
+});
 
 /* sending to db.json
 1. fs.appendfile to add to the database 
