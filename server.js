@@ -12,7 +12,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // database variable
-const notes = path
+const notes = require("./db/db.json")
+
+
 
 //ROUTES
 
