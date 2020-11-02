@@ -1,6 +1,7 @@
 // Application Dependencies
 const express = require("express");
 const path = require("path");
+const fs= require("fs");
 
 // variables for port and routing
 const app = express();
@@ -10,7 +11,8 @@ const PORT = process.env.PORT || 3001;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-//Accessing the database
+// database variable
+const notes = path
 
 //ROUTES
 
@@ -22,6 +24,23 @@ app.get("/", function(req, res) {
 
 
 //route for GET blah/notes.html (`/notes.html)
+app.get("/notes", function(req, res) {
+  res.sendFile(path.join(__dirname, "public/notes.html"));
+});
+/* note retrieval from db.json
+1. Use fs to call db.json 
+2. display it on notes.html 
+3. singular notes if time permits
+
+*/
+
+
+/* sending to db.json
+1. fs.appendfile to add to the database 
+2. ability to recall that information
+*/
+
+
 
 //route for GET api/notes
 
