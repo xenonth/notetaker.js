@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // database variable
-const noteJSON = require("./db/db.json");
+const notes = require("./db/db.json");
 
 //require conversion to an array
 
@@ -21,12 +21,6 @@ const noteJSON = require("./db/db.json");
 
 //ROUTES
 //default route
-
-  // If no matching route is found default to home
-app.get("*", function(req, res) {
-    res.sendFile(path.join(__dirname, "public/index.html"));
-});
-
 
 //route for GET index.html (`/`)
 app.get("/", function(req, res) {
@@ -73,22 +67,18 @@ app.post("./api/notes", function (req, res) {
   notes.push(newNote);
 
   // use fs to append data file
-  fs.appendFile(notes)
+  fs.appendFile("db/db.json", notes , function(err) {
+    console.log(err)
+  })
   
   //return file data to the user 
+
+  res.json(newNote);
   
   // Using a RegEx Pattern to remove spaces from newCharacter
 
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newnote.routeName = newCharacter.name.replace(/\s+/g, "").toLowerCase();
-
-  console.log(newCharacter);
-
-  res.json(newCharacter);
-
-  characters.push(newCharacter);
-
-  
+    
 });
 
 
