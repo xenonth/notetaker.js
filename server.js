@@ -12,11 +12,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // database variable
-const notes = require("./db/db.json")
+const noteJSON = require("./db/db.json");
+
+//require conversion to an array
+
 
 
 
 //ROUTES
+//default route
+
+  // If no matching route is found default to home
+app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "public/index.html"));
+});
+
 
 //route for GET index.html (`/`)
 app.get("/", function(req, res) {
@@ -36,9 +46,6 @@ app.get("/notes", function(req, res) {
 */
 
 // api json route display all notes
-app.get("/api/notes", function(req, res) {
-  return res.json(notes);
-});
 
 /* sending to db.json
 1. fs.appendfile to add to the database 
@@ -48,8 +55,42 @@ app.get("/api/notes", function(req, res) {
 
 
 //route for GET api/notes
+app.get("/api/notes", function(req, res) {
+  return res.json(notes);
+});
 
-//POST api/notes
+//POST api/notes Should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
+
+app.post("./api/notes", function (req, res) {
+
+  let newNote = req.body;
+  
+  console.log("post received");
+
+  console.log(newNote);
+
+  // push to notes data Array
+  notes.push(newNote);
+
+  // use fs to append data file
+  fs.appendFile(notes)
+  
+  //return file data to the user 
+  
+  // Using a RegEx Pattern to remove spaces from newCharacter
+
+  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
+  newnote.routeName = newCharacter.name.replace(/\s+/g, "").toLowerCase();
+
+  console.log(newCharacter);
+
+  res.json(newCharacter);
+
+  characters.push(newCharacter);
+
+  
+});
+
 
 //ability to delete said notes
 
