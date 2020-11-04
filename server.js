@@ -7,7 +7,7 @@ const fs= require("fs");
 
 //const router = express.Router();
 const app = express();
-const router = express.Router()
+let router = express.Router()
 
 
 // variables for port and routing
@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 3001;
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(__dirname));
 
 // database variable
 const notes = require("./db/db.json");
@@ -29,13 +30,13 @@ const notes = require("./db/db.json");
 //default route
 
 // "/notes" responds with the notes.html file
-router.get("/notes", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/notes.html"));
+app.get("/notes", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/notes.html"));
 });
 
 // All other routes respond with the index.html file
-router.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/index.html"));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "/public/index.html"));
 });
 
 /* note retrieval from db.json
