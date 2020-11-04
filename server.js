@@ -1,10 +1,16 @@
+//look at filing and data parsing using router!!
+
 // Application Dependencies
-const express = require("express");
+const express = require("express")
 const path = require("path");
 const fs= require("fs");
 
-// variables for port and routing
+//const router = express.Router();
 const app = express();
+const router = express.Router()
+
+
+// variables for port and routing
 const PORT = process.env.PORT || 3001;
 
 // Sets up the Express app to handle data parsing
@@ -22,17 +28,16 @@ const notes = require("./db/db.json");
 //ROUTES
 //default route
 
-//route for GET index.html (`/`)
-app.get("/", function(req, res) {
-    res.sendFile(path.join(__dirname, "public/index.html"));
-  });
-
-
-
-//route for GET blah/notes.html (`/notes.html)
-app.get("/notes", function(req, res) {
-  res.sendFile(path.join(__dirname, "public/notes.html"));
+// "/notes" responds with the notes.html file
+router.get("/notes", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/notes.html"));
 });
+
+// All other routes respond with the index.html file
+router.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/index.html"));
+});
+
 /* note retrieval from db.json
 1. Use fs to call db.json 
 2. display it on notes.html 
@@ -73,7 +78,7 @@ app.post("./api/notes", function (req, res) {
   
   //return file data to the user 
 
-  res.json(newNote);
+  res.json(notes);
   
   // Using a RegEx Pattern to remove spaces from newCharacter
 
