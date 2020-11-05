@@ -37,55 +37,15 @@ app.get("/notes", (req, res) => {
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 });
-
-/* note retrieval from db.json
-1. Use fs to call db.json 
-2. display it on notes.html 
-3. singular notes if time permits
-*/
-
-// api json route display all notes
-
-/* sending to db.json
-1. fs.appendfile to add to the database 
-2. ability to recall that information
-*/
-
-
-
-//route for GET api/notes
-app.get("/api/notes", function(req, res) {
-  return res.json(notes);
-});
-
-//POST api/notes Should receive a new note to save on the request body, add it to the `db.json` file, and then return the new note to the client.
-
-app.post("./api/notes", function (req, res) {
-
-  let newNote = req.body;
-  
-  console.log("post received");
-
-  console.log(newNote);
-
-  // push to notes data Array
-  notes.push(newNote);
-
-  // use fs to append data file
-  fs.appendFile("db/db.json", notes , function(err) {
-    console.log(err)
-  })
   
   //return file data to the user 
 
-  res.json(notes);
+ 
   
   // Using a RegEx Pattern to remove spaces from newCharacter
 
   // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
     
-});
-
 
 //ability to delete said notes
 
