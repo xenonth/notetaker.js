@@ -14,6 +14,7 @@ notesApi = () => {
         if (error) {
         console.log(error) 
         } else {
+            
             // Use fs to call db.json
             
             let notes = JSON.parse(data);

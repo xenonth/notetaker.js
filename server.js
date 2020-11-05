@@ -56,8 +56,8 @@ function notesApi () {
           
           let notes = JSON.parse(data);
                     // api json route to return and display all written notes
-          app.get("/api/notes", function(req, res) {
-            return res.json(notes);
+          app.get("api/notes/", function(req, res) {
+            res.json(notes)
           });
         
           /* 
@@ -66,7 +66,7 @@ function notesApi () {
           3. return the new note to the client.
           4. singular notes if time permits
           */
-         app.post("/api/notes", function (req, res) {
+         app.post("/api/notes/", function (req, res) {
 
               let newNote = req.body;
           
@@ -77,9 +77,16 @@ function notesApi () {
 
           // Adding newNote to the database
               updateNotesDB ();
-              console.log(`Successfully Added ${newNote.title}`);
-         
-          })
+              res.send(newNote);
+
+              return console.log(`Successfully Added ${newNote.title}`);
+        
+          });
+
+        // return the new note to the client
+        app.get("/api/notes/:id", function (req, res) {
+          res.send(req.params.JSON.stringify(id));
+        })
         
           // updating database function
           function updateNotesDB () {
