@@ -18,8 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// database variable
-const notes = require("./db/db.json");
+// reading database variable
 
 //require conversion to an array
 
