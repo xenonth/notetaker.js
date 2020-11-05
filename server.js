@@ -18,6 +18,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(__dirname));
 
+//api routes
+notesApi();
+
 // "/notes" responds with the notes.html file
 app.get("/notes", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/notes.html"));
@@ -28,9 +31,6 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/public/index.html"));
 });
   
-  //api routes
-notesApi();
- 
   
   // Using a RegEx Pattern to remove spaces from newCharacter
 
@@ -55,12 +55,11 @@ function notesApi () {
           // Use fs to call db.json
           
           let notes = JSON.parse(data);
-          
-          // api json route to return and display all written notes
+                    // api json route to return and display all written notes
           app.get("/api/notes", function(req, res) {
-              return res.json(notes);
-            });
-
+            return res.json(notes);
+          });
+        
           /* 
           1. Should receive a new note to save on the request body, 
           2. add it to the `db.json` file,
@@ -78,6 +77,7 @@ function notesApi () {
 
           // Adding newNote to the database
               updateNotesDB ();
+              console.log(`Successfully Added ${newNote.title}`);
          
           })
         
@@ -87,7 +87,7 @@ function notesApi () {
                   if (err) {
                       console.log(err);
                   } else {
-                      console.log(`Successfully Added ${newNote.title}`);
+                      console.log(`Successfully Added new note`);
                   }
 
               })
