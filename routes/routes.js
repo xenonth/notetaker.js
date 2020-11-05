@@ -1,12 +1,14 @@
 /* following code was inspired by the following github file https://github.com/amandalatkins/note-taker/blob/master/routes/routes.js As I found this week's homework difficult 
 and used the above as a guide to understand how to code app.post due to being unwell most of the week from a cold. 
-
 */
-
-const path = require("path");
+// dependancy variables
 const fs= require("fs");
- 
- app = () => { 
+const express = require("express");
+
+//shorthand variables
+const app = express();
+
+notesApi = () => { 
     // reading and extracting from the notes database.
     fs.readFile("db/db.json", "utf-8", function (error, data) {
         if (error) {
@@ -27,7 +29,7 @@ const fs= require("fs");
             3. return the new note to the client.
             4. singular notes if time permits
             */
-           app.post("./api/notes", function (req, res) {
+           app.post("/api/notes", function (req, res) {
   
                 let newNote = req.body;
             
@@ -37,7 +39,7 @@ const fs= require("fs");
                 notes.push(newNote);
 
             // Adding newNote to the database
-                updateNotesDB ()
+                updateNotesDB ();
            
             })
           
@@ -56,4 +58,3 @@ const fs= require("fs");
     })    
 }
 
-app();
