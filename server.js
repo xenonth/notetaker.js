@@ -29,15 +29,16 @@ app.use(express.static(__dirname));
   app.post("/api/notes", (req, res) => {
     //retrieving data from store.addNoted 
     store.addNote(req.body);
-    
+
+    //log to console when a new note is added
     console.log("Note Added");
-    
+
+
+    // should send getNote data back
     res.send(store.getNote(req.body))
   });
 
-  router.delete("/notes/:id", (req, res) => {
-    let removeNote = req.params.id;
-  });
+
 
 // "/notes" responds with the notes.html file
 app.get("/notes", (req, res) => {
@@ -50,12 +51,10 @@ app.get("*", (req, res) => {
 });
   
   
-  // Using a RegEx Pattern to remove spaces from newCharacter
-
-  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-    
-
 //ability to delete said notes
+router.delete("/notes/:id", (req, res) => {
+  let removeNote = req.params.id;
+});
 
 // Starts the server to begin listening
 // =============================================================
