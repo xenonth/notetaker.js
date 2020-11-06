@@ -4,10 +4,11 @@
 const express = require("express")
 const path = require("path");
 const fs= require("fs");
+const store = require("./db/store.js");
 
 //const router = express.Router();
 const app = express();
-let router = express.Router()
+const router = express.Router()
 
 
 // variables for port and routing
@@ -19,7 +20,24 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 //api routes
-notesApi();
+//apiRoutes Function
+  // reading and extracting from the notes database.
+  app.get("/api/notes", (req, res) => {
+    res.json(store.getNote());
+  });
+
+  app.post("/api/notes", (req, res) => {
+    //retrieving data from store.addNoted 
+    store.addNote(req.body);
+    
+    console.log("Note Added");
+    
+    res.send(store.getNote(req.body))
+  });
+
+  router.delete("/notes/:id", (req, res) => {
+    let removeNote = req.params.id;
+  });
 
 // "/notes" responds with the notes.html file
 app.get("/notes", (req, res) => {
@@ -43,62 +61,6 @@ app.get("*", (req, res) => {
 // =============================================================
 app.listen(PORT, function() {
     console.log("App listening on PORT " + PORT);
-  });
+});
 
-//apiRoutes Function
-function notesApi () { 
-  // reading and extracting from the notes database.
-  fs.readFile("db/db.json", "utf-8", function (error, data) {
-      if (error) {
-      console.log(error) 
-      } else {
-          // Use fs to call db.json
-          
-          let notes = JSON.parse(data);
-                    // api json route to return and display all written notes
-          app.get("api/notes/", function(req, res) {
-            res.json(notes)
-          });
-        
-          /* 
-          1. Should receive a new note to save on the request body, 
-          2. add it to the `db.json` file,
-          3. return the new note to the client.
-          4. singular notes if time permits
-          */
-         app.post("/api/notes/", function (req, res) {
-
-              let newNote = req.body;
-          
-              console.log("post received");
-        
-          // push to notes JSON data Array
-              notes.push(newNote);
-
-          // Adding newNote to the database
-              updateNotesDB ();
-              res.send(newNote);
-
-              return console.log(`Successfully Added ${newNote.title}`);
-        
-          });
-
-        // return the new note to the client
-        app.get("/api/notes/:id", function (req, res) {
-          res.send(req.params.JSON.stringify(id));
-        })
-        
-          // updating database function
-          function updateNotesDB () {
-              fs.writeFile("db/db.json", JSON.stringify(notes, "\t") , function(err) {
-                  if (err) {
-                      console.log(err);
-                  } else {
-                      console.log(`Successfully Added new note`);
-                  }
-
-              })
-          }
-      }
-  })    
-}
+  
